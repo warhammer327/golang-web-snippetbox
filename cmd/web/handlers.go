@@ -1,8 +1,10 @@
+
 package main
 
 import(
-	"log"
+	"fmt"
 	"net/http"
+	"strconv"
 )
 
 func home (w http.ResponseWriter, r *http.Request){
@@ -14,11 +16,17 @@ func home (w http.ResponseWriter, r *http.Request){
 }
 
 func showSnippet(w http.ResponseWriter, r *http.Request){
-	w.Write([]byte("show a specific snippet"))
+	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+	if err != nil || id <1 {
+		http.NotFound(w,r)
+		return
+	}
+	fmt.Fprintf(w, "snippet id %d", id)
 }
 
 func createSnippet(w http.ResponseWriter, r *http.Request){
 	if r.Method != http.MethodPost {
+		//both code do the same
 		// w.Header().Set("Allow", http.MethodPost)
 		// w.WriteHeader(405)
 		// w.Write([]byte("Post method mising"))
@@ -27,15 +35,4 @@ func createSnippet(w http.ResponseWriter, r *http.Request){
 		return
 	}
 	w.Write([]byte("create a specific snippet"))
-}
-
-func main(){
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", home)
-	mux.HandleFunc("/showSnippet", showSnippet)
-	mux.HandleFunc("/create/snippet", createSnippet)
-
-	log.Println("starting server on 4000")
-	err := http.ListenAndServe(":4000",mux)
-	log.Fatal(err)
 }
