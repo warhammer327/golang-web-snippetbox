@@ -3,20 +3,22 @@ package main
 import (
 	"database/sql"
 	"flag"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"net/http"
 	"os"
-	_ "github.com/go-sql-driver/mysql"
+	"warhammer327.github.io/snippetbox/pkg/models/mysql"
 )
 
 type application struct {
 	errorLog *log.Logger
 	infoLog  *log.Logger
+	snippets *mysql.SnippetModel
 }
 
 func main() {
 	addr := flag.String("addr", ":4000", "http service address")
-	dsn := flag.String("dsn", "web:goof@/snippetbox?parseTime=true","MYSQL data source name")
+	dsn := flag.String("dsn", "web:goof@/snippetbox?parseTime=true", "MYSQL data source name")
 	flag.Parse()
 
 	infoLog := log.New(os.Stdout, "[INFO] ", log.Ldate|log.Ltime)
@@ -45,12 +47,12 @@ func main() {
 	errorLog.Fatal(err)
 }
 
-func openDB(dsn string)(*sql.DB, error){
-	db, err := sql.Open("mysql",dsn)
-	if err!= nil{
+func openDB(dsn string) (*sql.DB, error) {
+	db, err := sql.Open("mysql", dsn)
+	if err != nil {
 		return nil, err
 	}
-	if err = db.Ping(); err!=nil{
+	if err = db.Ping(); err != nil {
 		return nil, err
 	}
 	return db, nil

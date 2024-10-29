@@ -1,4 +1,4 @@
-module warhammer327.github.io/snippet
+module warhammer327.github.io/snippetbox
 
 go 1.22.7
 
