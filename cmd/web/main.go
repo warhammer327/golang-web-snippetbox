@@ -3,11 +3,11 @@ package main
 import (
 	"database/sql"
 	"flag"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"net/http"
 	"os"
 	"warhammer327.github.io/snippetbox/pkg/models/mysql"
-	_ "github.com/go-sql-driver/mysql"
 )
 
 type application struct {
@@ -35,7 +35,7 @@ func main() {
 	app := &application{
 		errorLog: errorLog,
 		infoLog:  infoLog,
-        snippets: &mysql.SnippetModel{DB:db},
+		snippets: &mysql.SnippetModel{DB: db},
 	}
 
 	srv := &http.Server{

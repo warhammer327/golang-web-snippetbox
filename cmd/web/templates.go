@@ -1,8 +1,12 @@
 package main
 
-import "warhammer327.github.io/snippetbox/pkg/models"
+import (
+	"html/template"
+	"path/filepath"
+	"warhammer327.github.io/snippetbox/pkg/models"
+)
 
-
-type templateData struct{
-	Snippet *models.Snippet
+type templateData struct {
+	Snippet  *models.Snippet
+	Snippets []*models.Snippet
 }
