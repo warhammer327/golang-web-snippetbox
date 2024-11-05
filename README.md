@@ -20,6 +20,9 @@ This is a Go project following the best practices from the book Let's Go by Alex
 ### Features
 - **Project Configuration**: Configures the application using environment variables and a configuration struct.
 - **Error Handling**: Uses a central error handler for graceful and consistent error management.
-- **Database Driven Response**: Uses a database (e.g., PostgreSQL, MySQL) to retrieve dynamic data.
-- **Dynamic HTML Rendering**: Serves HTML pages with dynamic data using Go's html/template package.
+- **Database Driven Response**: Uses a database (MySQL recommended) to retrieve dynamic data.
+- **Dynamic HTML Rendering**: Serve HTML pages with dynamic data using Go's html/template package.
 - **Middleware**: Implements custom middleware for logging, session handling, and more.
+
+### Acknowledgements
+Thanks to Alex Edwards for his excellent book Let's Go, which provided the foundational principles and best practices followed in this project.
