@@ -1,5 +1,5 @@
 # Snippetbox
-This is a Go project following the best practices from the book Let's Go by Alex Edward. This project demonstrates how to configure a Go web application, handle errors gracefully, use a database for dynamic responses, and implement middleware for request processing.
+This project demonstrates how to configure a Go web application, handle errors gracefully, use a database for dynamic responses, and implement middleware for request processing.
 
 ```
 /root
