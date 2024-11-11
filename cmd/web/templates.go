@@ -2,15 +2,14 @@ package main
 
 import (
 	"html/template"
-	"net/url"
 	"path/filepath"
+	"warhammer327.github.io/snippetbox/pkg/forms"
 	"warhammer327.github.io/snippetbox/pkg/models"
 )
 
 type templateData struct {
 	CurrentYear int
-	FormData    url.Values
-	FormErrors  map[string]string
+	Form        *forms.Form
 	Snippet     *models.Snippet
 	Snippets    []*models.Snippet
 }
