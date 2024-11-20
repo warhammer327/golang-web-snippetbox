@@ -59,27 +59,6 @@ func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	app.render(w, r, "show.page.tmpl", &templateData{Snippet: s})
-	// data := &templateData{Snippet: s}
-	//
-	//	files := []string{
-	//		"./ui/html/show.page.tmpl",
-	//		"./ui/html/base.layout.tmpl",
-	//		"./ui/html/footer.partial.tmpl",
-	//	}
-	//
-	// ts, err := template.ParseFiles(files...)
-	//
-	//	if err != nil {
-	//		app.serverError(w, err)
-	//		return
-	//	}
-	//
-	// err = ts.Execute(w, data)
-	//
-	//	if err != nil {
-	//		app.serverError(w, err)
-	//		return
-	//	}
 }
 
 func (app *application) createSnippetForm(w http.ResponseWriter, r *http.Request) {
@@ -117,6 +96,6 @@ func (app *application) createSnippet(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, err)
 		return
 	}
-
+	app.session.Put(r, "flash", "Snippet successfully created")
 	http.Redirect(w, r, fmt.Sprintf("/snippet/%d", id), http.StatusSeeOther)
 }
