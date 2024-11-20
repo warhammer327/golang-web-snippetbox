@@ -2,10 +2,14 @@ package main
 
 import (
 	"github.com/bmizerany/pat"
+	"github.com/justinas/alice"
 	"net/http"
 )
 
 func (app *application) routes() http.Handler {
+
+	standardMiddleware := alice.New(app.recoverPanic, app.logRequest, secureHeader)
+
 	mux := pat.New()
 	mux.Get("/", http.HandlerFunc(app.home))
 	mux.Get("/snippet/create", http.HandlerFunc(app.createSnippetForm))
@@ -14,5 +18,5 @@ func (app *application) routes() http.Handler {
 	fileServer := http.FileServer(http.Dir("./ui/static/"))
 	mux.Get("/static/", http.StripPrefix("/static", fileServer))
 
-	return app.recoverPanic(app.logRequest(secureHeader(mux)))
+	return standardMiddleware.Then(mux)
 }

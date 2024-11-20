@@ -4,16 +4,19 @@ import (
 	"database/sql"
 	"flag"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/golangcollege/sessions"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
+	"time"
 	"warhammer327.github.io/snippetbox/pkg/models/mysql"
 )
 
 type application struct {
 	errorLog      *log.Logger
 	infoLog       *log.Logger
+	session       *sessions.Session
 	snippets      *mysql.SnippetModel
 	templateCache map[string]*template.Template
 }
@@ -21,6 +24,7 @@ type application struct {
 func main() {
 	addr := flag.String("addr", ":4000", "http service address")
 	dsn := flag.String("dsn", "web:goof@/snippetbox?parseTime=true", "MYSQL data source name")
+	secret := flag.String("secret", "aaaasssseeeerrrrqqqqbbbbrrroooo", "Secret key")
 	flag.Parse()
 
 	infoLog := log.New(os.Stdout, "[INFO] ", log.Ldate|log.Ltime)
@@ -39,9 +43,12 @@ func main() {
 		errorLog.Fatal(err)
 	}
 
+	session := sessions.New([]byte(*secret))
+	session.Lifetime = 12 * time.Hour
 	app := &application{
 		errorLog:      errorLog,
 		infoLog:       infoLog,
+		session:       session,
 		snippets:      &mysql.SnippetModel{DB: db},
 		templateCache: templateCache,
 	}
