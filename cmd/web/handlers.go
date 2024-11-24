@@ -150,3 +150,8 @@ func (app *application) logoutUser(w http.ResponseWriter, r *http.Request) {
 	app.session.Put(r, "flash", "You've been logged out successfully!")
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
+
+// Return true if the current request is from authenticated user, otherwise return false.
+func (app *application) isAuthenticated(r *http.Request) bool {
+	return app.session.Exists(r, "AuthenticatedUserID")
+}
