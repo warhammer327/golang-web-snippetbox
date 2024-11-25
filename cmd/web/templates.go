@@ -3,6 +3,7 @@ package main
 import (
 	"html/template"
 	"path/filepath"
+	"time"
 	"warhammer327.github.io/snippetbox/pkg/forms"
 	"warhammer327.github.io/snippetbox/pkg/models"
 )
@@ -16,6 +17,13 @@ type templateData struct {
 	Snippets        []*models.Snippet
 }
 
+func humanDate(t time.Time) string {
+	if t.IsZero() {
+		return ""
+	}
+	// Convert the time to UTC before formatting it.
+	return t.UTC().Format("02 Jan 2006 at 15:04")
+}
 func newTemplateCache(dir string) (map[string]*template.Template, error) {
 	cache := map[string]*template.Template{}
 
